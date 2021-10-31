@@ -1,7 +1,10 @@
 import os
+from urllib.parse import unquote
 import requests
 from flask import Flask
+from flask import request
 from flask import render_template
+from youtube_dl import YoutubeDL
 
 
 ACCOUNT_ID = os.environ.get("ACCOUNT_ID", "6206459123001")
@@ -81,4 +84,56 @@ def jw(video_id):
         video_name=video_name,
         video_url=video_url,
         track_url=track_url,
+    )
+
+@app.route("/<string(length=11):video_id>")
+def youtube(video_id):
+    url = f"https://youtu.be/{video_id}"
+    with YoutubeDL() as ydl:
+      info_dict = ydl.extract_info(url, download=False)
+
+    video_name = info_dict['title']
+
+    videos = [ {"format": format["height"], "url": format["url"]} for format in info_dict["formats"] if format["format_id"] in ["18", "22"] ]
+    captions = info_dict["automatic_captions"] if "automatic_captions" in info_dict else []
+    video_captions = { caption: captions[caption][-1]["url"] for caption in captions if caption in ['en', 'hi'] }
+    caption = len(video_captions) != 0
+
+    return render_template(
+        "yt_template.html",
+        video_name=video_name,
+        videos=videos,
+        caption=caption,
+        video_captions=video_captions
+    )
+
+
+@app.route("/play")
+def play():
+    url = request.query_string.decode("utf-8").removeprefix("url=")
+    content_type = requests.head(url).headers["content-type"]
+    print(content_type)
+    con_type = content_type.split("/")[0]
+    if con_type == "audio":
+        title = "Audio"
+        url_type = content_type
+    elif con_type == "Video":
+        title = "Video"
+        url_type = content_type
+    elif url.endswith(".mp3") or url.endswith(".m4a"):
+        ext = url.split('.')[-1]
+        title = "Audio"
+        url_type = f"audio/{ext}"
+    elif url.endswith(".mp4") or url.endswith(".mkv"):
+        ext = url.split('.')[-1]
+        title = "Video"
+        url_type = f"video/{ext}"
+    else:
+        return "Unsupported format"
+
+    return render_template(
+        "direct_template.html",
+        title=title,
+        url=url,
+        type=url_type,
     )
