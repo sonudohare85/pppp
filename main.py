@@ -100,7 +100,7 @@ def youtube(video_id):
     caption = len(video_captions) != 0
 
     return render_template(
-        "yt_template.html",
+        "youtube.html",
         video_name=video_name,
         videos=videos,
         caption=caption,
