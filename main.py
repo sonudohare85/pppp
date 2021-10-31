@@ -85,24 +85,3 @@ def jw(video_id):
         video_url=video_url,
         track_url=track_url,
     )
-
-@app.route("/<string(length=11):video_id>")
-def youtube(video_id):
-    url = f"https://youtu.be/{video_id}"
-    with YoutubeDL() as ydl:
-      info_dict = ydl.extract_info(url, download=False)
-
-    video_name = info_dict['title']
-
-    videos = [ {"format": format["height"], "url": format["url"]} for format in info_dict["formats"] if format["format_id"] in ["18", "22"] ]
-    captions = info_dict["automatic_captions"] if "automatic_captions" in info_dict else []
-    video_captions = { caption: captions[caption][-1]["url"] for caption in captions if caption in ['en', 'hi'] }
-    caption = len(video_captions) != 0
-
-    return render_template(
-        "youtube.html",
-        video_name=video_name,
-        videos=videos,
-        caption=caption,
-        video_captions=video_captions
-    )
