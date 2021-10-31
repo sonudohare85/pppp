@@ -50,6 +50,7 @@ def brightcove(video_id):
     track_url = video["text_tracks"][1]["src"]
     if url_args != "":
         video_url += "?" + url_args
+    return play_dash(video_url, video_name, track_url, widevine_url, microsoft_url)    
     return render_template(
         "template.html",
         type="brightcove",
