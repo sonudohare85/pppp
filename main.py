@@ -16,6 +16,9 @@ bc_url = (
 
 bc_hdr = {"BCOV-POLICY": BCOV_POLICY}
 
+fmt=3
+url_args=""
+
 jw_url = "https://cdn.jwplayer.com/v2/media"
 
 app = Flask(__name__)
@@ -36,7 +39,7 @@ def brightcove(video_id):
     video_url = video_source["src"]
     widevine_url = ""
     microsoft_url = ""
-    if "key_systems" in video_source:
+    if "key_systems" in video_source and fmt == 3:
         widevine_url = video_source["key_systems"]["com.widevine.alpha"][
             "license_url"
         ]
@@ -45,6 +48,8 @@ def brightcove(video_id):
         ]
 
     track_url = video["text_tracks"][1]["src"]
+    if url_args != "":
+        video_url += "?" + url_args
     return render_template(
         "template.html",
         type="brightcove",
