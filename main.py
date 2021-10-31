@@ -3,8 +3,7 @@ import requests
 from flask import Flask
 from flask import request
 from flask import render_template
-from werkzeug.utils import redirect
-from youtube_dl import YoutubeDL
+
 
 
 ACCOUNT_ID = os.environ.get("ACCOUNT_ID", "6206459123001")
