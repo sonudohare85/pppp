@@ -21,16 +21,6 @@ url_args=""
 
 jw_url = "https://cdn.jwplayer.com/v2/media"
 
-def play_dash(url, title="DASH", track_url="", widevine_url="", microsoft_url="", bitrate=False):
-    return render_template(
-        "dash.html",
-        title=title,
-        url=url,
-        track_url=track_url,
-        widevine_url=widevine_url,
-        microsoft_url=microsoft_url,
-        bitrate=bitrate,
-    )
 
 app = Flask(__name__)
 
@@ -61,7 +51,15 @@ def brightcove(video_id):
     track_url = video["text_tracks"][1]["src"]
     if url_args != "":
         video_url += "?" + url_args
-    return play_dash(video_url, video_name, track_url, widevine_url, microsoft_url)    
+    return render_template(
+        "template.html",
+        type="brightcove",
+        video_name=video_name,
+        video_url=video_url,
+        track_url=track_url,
+        widevine_url=widevine_url,
+        microsoft_url=microsoft_url,
+    )   
  
 
 @app.route("/<string(length=8):video_id>")
