@@ -18,7 +18,7 @@ bc_url = (
 
 bc_hdr = {"BCOV-POLICY": BCOV_POLICY}
 
-fmt=4
+fmt=3
 url_args="bcov_auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhY2NpZCI6IjYyMDY0NTkxMjMwMDEiLCJleHAiOjE2MzU2ODY3NDMsImlhdCI6MTYzNTY4MTk0MywiY29uaWQiOiI2Mjc4MzAwMDAxMDAxIiwibWF4aXAiOjF9.MOcr31iKUCmg4fHCgP_j6trU1sbFqKvd2FzWD1VYxw-geQcrQxETV3IidWkcXMm_YsYOZ7z161wRH5DAY9xArIR2n5SIoBYsBnWWWMOn9MEsmSEQ0wHU3izMuzS9GPt1JThMKPclWlxL4NkiL8h-pocN8kzQeFGxMnpRsOAXutgZv9jQq8lDifJH5mgsDRCVsfwHtKea0IjxNBSUHXa8cyDfVN8ojQLeYQbQAnuoW-KAIVpVj5iC_qiY5dDVwwU-jDef95JZuq5Dcndq5DT_Psdz7IoQdMSF3rnh_6mn1adF0EDSYhjPbtr1W7jxupUx5yRKkoSTwDpyif5mlZWHJQ"
 
 jw_url = "https://cdn.jwplayer.com/v2/media"
@@ -42,7 +42,7 @@ def brightcove(video_id):
     video_url = video_source["src"]
     widevine_url = ""
     microsoft_url = ""
-    if "key_systems" in video_source and fmt == 4:
+    if "key_systems" in video_source and fmt == 3:
         widevine_url = video_source["key_systems"]["com.widevine.alpha"][
             "license_url"
         ]
