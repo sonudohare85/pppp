@@ -51,7 +51,7 @@ def brightcove(video_id):
         ]
 
     track_url = video["text_tracks"][1]["src"]
-    if url_args != "":
+    if url_args != "fastly_token=NjE3YWZjYjZfMmIzMTI3YmU5MzNhOTljOTM2ZGUyZDZjNDNhMGJhNTQ5ZGU2ODdiMWZhZTgwZjhlMDQ2ZGQyYzg0ZGZiMzlkZg%3D%3D&bcov_auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhY2NpZCI6IjYyMDY0NTkxMjMwMDEiLCJleHAiOjE2MzU0NDU5OTcsImlhdCI6MTYzNTQ0MTE5NywiY29uaWQiOiI2Mjc4ODY1MzA2MDAxIiwibWF4aXAiOjF9.Iqxn5TfvXxESIBWvjaEHvDh875kAOEUNrIEnPZHPPl_XCreNJKqdmiwUsr_GkIKDiZRrvthcY9jQENhRtkHNaBX1h-R6LaAXyVRxYsz1eeBFN9ykY-mmMZDDPS8o0mdoHb17lAJCFKDrdPqc5uP7unElpU8DsX904reraYpV8eUEzMHA0vEHWSy_Os9dpc43og_A73-4EqFfIdGGOXgY4UTd8fJ5DHBAx-YF1l77BqVHiHXQmMyCQ1rXtN0T7LlCj3UF9e2RCwgEOiI45wnt_HS-LmYD1igk-5N45bseuqjO40nnmvSAlsIVPa6JweEARuHSgsCa9gvSoSN69ThI2g":
         video_url += "?" + url_args
     return render_template(
         "template.html",
